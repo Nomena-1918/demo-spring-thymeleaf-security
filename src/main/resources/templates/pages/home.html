@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/main_layout}" lang="fr">
+<body>
+<!-- BODY -->
+<div layout:fragment="content" class=" offset-2 col-10">
+    <h1 class="h1 py-3"> Home page <span th:remove="tag" sec:authentication="name">thymeleaf</span> </h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-primary py-3">Log Out</button>
+    </form>
+</div>
+<!-- -->
+</body>
+</html>

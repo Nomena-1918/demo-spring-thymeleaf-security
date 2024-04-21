@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/main_layout}" lang="fr">
+<body>
+<!-- BODY -->
+<div layout:fragment="content" class="offset-2 col-10">
+    <div th:if="${param.error}" class="alert alert-danger col-6" role="alert">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success col-6" role="alert">
+        You have been logged out.
+    </div>
+    <form class="form col-6" th:action="@{/login}" method="post">
+        <div class="form-group py-3">
+            <label for="username">User Name:</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group py-3">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+</div>
+</body>
+</html>

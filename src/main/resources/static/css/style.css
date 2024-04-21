@@ -1,0 +1,18 @@
+body {
+    min-height: 100vh; /* Force le corps de la page à avoir une hauteur minimale de 100% de la hauteur de la fenêtre */
+    margin: 0; /* Supprime la marge par défaut du corps */
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    color: white;
+}
+
+.navbar-nav .nav-link:link {
+    color: white;
+}
+
+.navbar-nav .nav-link:hover {
+    color: lightgrey;
+}
