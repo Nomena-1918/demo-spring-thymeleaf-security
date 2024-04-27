@@ -12,7 +12,7 @@ public class HomeController {
     public String index() {
         return "index";
     }
-    
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/home")
     public String home() {

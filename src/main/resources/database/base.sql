@@ -23,12 +23,27 @@ create table user_roles(
     foreign key(role_id) references roles(id)
 );
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+
 -- insert data
 insert into roles(role) values('ROLE_USER');
 insert into roles(role) values('ROLE_ADMIN');
+/*
+ INSERT INTO users (username, password) VALUES (
+  'user',
+  crypt('password', gen_salt('bf'))
+);
+ SELECT id
+FROM users
+WHERE username = 'user'
+  AND password = crypt('password', password);
 
-insert into users(username, password) values('user', 'password');
-insert into users(username, password) values('admin', 'password');
+ */
+INSERT INTO users (username, password) VALUES
+('user',crypt('password', gen_salt('bf')));
+INSERT INTO users (username, password) VALUES
+('admin',crypt('password', gen_salt('bf')));
 
 insert into user_roles(user_id, role_id) values(1, 1);
 insert into user_roles(user_id, role_id) values(2, 2);
