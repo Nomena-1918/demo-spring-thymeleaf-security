@@ -24,13 +24,6 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
-    private final RoleRepository roleRepository;
-
-    @Autowired
-    public WebSecurityConfig(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authz) -> authz
@@ -51,15 +44,11 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public RoleHierarchy roleHierarchy() {
-        return new DatabaseRoleHierarchy(roleRepository);
-    }
 
     @Bean
-    public DefaultWebSecurityExpressionHandler customWebSecurityExpressionHandler() {
+    public DefaultWebSecurityExpressionHandler customWebSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
         DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
-        expressionHandler.setRoleHierarchy(roleHierarchy());
+        expressionHandler.setRoleHierarchy(roleHierarchy);
         return expressionHandler;
     }
 

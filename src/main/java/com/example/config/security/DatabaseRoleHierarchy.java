@@ -29,7 +29,7 @@ public class DatabaseRoleHierarchy implements RoleHierarchy {
 
         // Build the hierarchy maps
         for (Role role : rolesWithChildren) {
-            String roleName = role.getName();
+            String roleName = role.getRole();
             Collection<GrantedAuthority> authoritiesForRole = authorities.stream()
                     .filter(ga -> ga.getAuthority().equals(roleName))
                     .collect(Collectors.toList());
@@ -39,14 +39,14 @@ public class DatabaseRoleHierarchy implements RoleHierarchy {
             // For roles reachable in one or more steps, add the role itself and its children
             rolesReachableInOneOrMoreStepsMap.put(roleName, new ArrayList<>(authoritiesForRole));
             for (Role child : role.getChildren()) {
-                rolesReachableInOneOrMoreStepsMap.get(roleName).addAll(rolesReachableInOneOrMoreStepsMap.getOrDefault(child.getName(), Collections.emptyList()));
+                rolesReachableInOneOrMoreStepsMap.get(roleName).addAll(rolesReachableInOneOrMoreStepsMap.getOrDefault(child.getRole(), Collections.emptyList()));
             }
         }
 
         // Combine the reachable authorities from both maps
         Collection<GrantedAuthority> reachableAuthorities = new HashSet<>();
-        reachableAuthorities.addAll(rolesReachableInOneStepMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList()));
-        reachableAuthorities.addAll(rolesReachableInOneOrMoreStepsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList()));
+        reachableAuthorities.addAll(rolesReachableInOneStepMap.values().stream().flatMap(Collection::stream).toList());
+        reachableAuthorities.addAll(rolesReachableInOneOrMoreStepsMap.values().stream().flatMap(Collection::stream).toList());
 
         return reachableAuthorities;
     }

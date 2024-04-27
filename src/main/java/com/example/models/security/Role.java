@@ -7,12 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String role;
 
     @ManyToMany(mappedBy = "children", fetch = FetchType.LAZY)
     private Set<Role> parents = new HashSet<>();
@@ -34,12 +35,12 @@ public class Role {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public Role setName(String name) {
-        this.name = name;
+    public Role setRole(String role) {
+        this.role = role;
         return this;
     }
 
