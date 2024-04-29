@@ -47,11 +47,12 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    /*
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+*/
 
     @Bean
     public DefaultWebSecurityExpressionHandler customWebSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
