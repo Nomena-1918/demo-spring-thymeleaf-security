@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -36,7 +37,14 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
+
                 )
+/*
+                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/**"))
+                        .hasRole("ROLE_ADMIN")
+                        .anyRequest()
+                        .authenticated())
+*/
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
@@ -53,6 +61,7 @@ public class WebSecurityConfig {
 
     @Bean
     public RoleHierarchy roleHierarchy() {
+        //return new RoleHierarchyImpl("ROLE_ADMIN > ROLE_USER");
         return new DatabaseRoleHierarchy(roleRepository);
     }
 
