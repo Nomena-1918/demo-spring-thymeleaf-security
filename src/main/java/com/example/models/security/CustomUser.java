@@ -17,19 +17,13 @@ public class CustomUser {
     private String username;
     @Column(name = "password")
     private String password;
-/*
+
+    @Column(name = "role")
     private String role;
 
     public String getRole() {
         return role;
     }
-*/
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -56,12 +50,4 @@ public class CustomUser {
         return this;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public CustomUser setRoles(Set<Role> roles) {
-        this.roles = roles;
-        return this;
-    }
 }

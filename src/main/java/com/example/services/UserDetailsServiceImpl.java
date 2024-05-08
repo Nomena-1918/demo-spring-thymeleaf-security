@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -25,17 +28,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         CustomUser user = customUserRepository.findFirstByUsername(username);
-        if (user == null) {
+        if (user == null)
             throw new UsernameNotFoundException("User not found");
-        }
-
-        Set<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toSet());
 
         GrantedAuthority g = new SimpleGrantedAuthority(user.getRole());
-
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Set.of(g));
+    }
+
+    public UserDetails getCurrentUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            return (UserDetails) authentication.getPrincipal();
+        }
+        return null;
     }
 }
 
