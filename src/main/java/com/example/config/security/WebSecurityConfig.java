@@ -7,12 +7,10 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
 
 @Configuration
 @EnableWebSecurity
@@ -30,13 +28,10 @@ public class WebSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         //.loginProcessingUrl("/login")
-                        .successForwardUrl("/home")
+                        .successForwardUrl("/index")
                         .permitAll()
                 )
-                .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                        .logoutSuccessUrl("/login")
-                );
+                .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
 

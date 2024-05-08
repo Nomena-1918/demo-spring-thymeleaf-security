@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,12 @@ public class HomeController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("message", "Hello, World!");
+        model.addAttribute("message", "Hello, tu es authentifié :3");
         return "index";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //@PreAuthorize("hasRole('ROLE_USER')")
+    @Secured("ROLE_USER")
     @GetMapping("/home")
     public String home(Model model) {
         UserDetails u = userDetailsService.getCurrentUserDetails();
