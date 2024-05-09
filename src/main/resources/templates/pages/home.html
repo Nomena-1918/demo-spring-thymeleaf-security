@@ -5,7 +5,7 @@
 <!-- BODY -->
 <div layout:fragment="content" class=" offset-2 col-10">
     <h1 class="h1 py-3"> Home page <span th:remove="tag" sec:authentication="name">thymeleaf</span> </h1>
-    <span th:text="${message}"></span>
+    <p th:text="${message}"></p>
     <form th:action="@{/logout}" method="post" class="py-4">
         <button type="submit" class="btn btn-primary">Log Out</button>
     </form>
